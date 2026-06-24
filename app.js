@@ -1,7 +1,6 @@
 ﻿const PRODUCT_SOURCES = [
   { file: "sanflex.json", categoryId: "racores", categoryName: "Racores y conectores PU", shortName: "Racores" },
   { file: "manguera-pu.json", categoryId: "tubing", categoryName: "Mangueras de poliuretano PU", shortName: "Tubing PU" },
-  { file: "mangueras.json", categoryId: "mangueras", categoryName: "Mangueras nylon PA12", shortName: "Mangueras" },
   { file: "acoples -rapidos.json", categoryId: "acoples", categoryName: "Acoples rapidos", shortName: "Acoples" }
 ];
 
@@ -271,6 +270,8 @@ function renderProductCard(product) {
     </article>
   `;
 }
+
+
 
 function openProduct(productId) {
   const product = state.products.find((item) => item.id === productId);
