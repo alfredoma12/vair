@@ -1,0 +1,80 @@
+[
+    {
+        "nombre": "Acople rápido aire HI 1/4\" BSP tipo alemán DN7.2",
+        "descripcion": "Acople rápido neumático tipo alemán HI 1/4\" BSP DN7.2 , fabricado en latón amarillo , ideal para conectar y desconectar herramientas de aire comprimido de manera rápida y segura. Perfecto para talleres, compresores y sistemas industriales.",
+        "precio": 3099,
+        "url_producto": "https://sanflex.cl/acoples-rapidos/301-acople-rápido-aire-hi-14-bsp-tipo-alemán-dn72.html",
+        "url_imagen": "https://sanflex.cl/1016-large_default/acople-rápido-aire-hi-14-bsp-tipo-alemán-dn72.jpg",
+        "marca": null,
+        "categoria": "conectores-rapidos-pu-racores-pu",
+        "diametro_tubing": null,
+        "tipo_conector": null,
+        "tipo_hilo": "1/4",
+        "material": "latón"
+    },
+    {
+        "nombre": "Acople rápido aire HI 3/8\" BSP tipo alemán DN7.2",
+        "descripcion": "Acople rápido neumático tipo alemán HI 3/8\" BSP DN7.2 , fabricado en latón amarillo , ideal para conectar y desconectar herramientas de aire comprimido de manera rápida y confiable. Perfecto para talleres, compresores y sistemas industriales.",
+        "precio": 3099,
+        "url_producto": "https://sanflex.cl/acoples-rapidos/312-acople-rápido-aire-hi-38-bsp-tipo-alemán-dn72.html",
+        "url_imagen": "https://sanflex.cl/1011-large_default/acople-rápido-aire-hi-38-bsp-tipo-alemán-dn72.jpg",
+        "marca": null,
+        "categoria": "conectores-rapidos-pu-racores-pu",
+        "diametro_tubing": null,
+        "tipo_conector": null,
+        "tipo_hilo": "3/8",
+        "material": "latón"
+    },
+    {
+        "nombre": "Acople rápido aire HI 1/2\" BSP tipo alemán DN7.2",
+        "descripcion": "Acople rápido neumático tipo alemán HI 1/2\" BSP DN7.2 , fabricado en latón amarillo , ideal para conectar y desconectar herramientas de aire comprimido de manera rápida y segura. Perfecto para talleres, compresores y sistemas industriales de mayor caudal.",
+        "precio": 3390,
+        "url_producto": "https://sanflex.cl/acoples-rapidos/313-acople-rápido-aire-hi-12-bsp-tipo-alemán-dn72.html",
+        "url_imagen": "https://sanflex.cl/1015-large_default/acople-rápido-aire-hi-12-bsp-tipo-alemán-dn72.jpg",
+        "marca": null,
+        "categoria": "conectores-rapidos-pu-racores-pu",
+        "diametro_tubing": null,
+        "tipo_conector": null,
+        "tipo_hilo": "1/2",
+        "material": "latón"
+    },
+    {
+        "nombre": "Acople rápido aire HE 1/2\" BSP tipo alemán DN7.2",
+        "descripcion": "Acople rápido neumático tipo alemán HE 1/2\" BSP DN7.2 , fabricado en latón amarillo , ideal para conectar y desconectar herramientas de aire comprimido de manera rápida y segura. Perfecto para talleres, compresores y sistemas industriales de mayor caudal.",
+        "precio": 3390,
+        "url_producto": "https://sanflex.cl/acoples-rapidos/316-acople-rápido-aire-he-12-bsp-tipo-alemán-dn72.html",
+        "url_imagen": "https://sanflex.cl/1028-large_default/acople-rápido-aire-he-12-bsp-tipo-alemán-dn72.jpg",
+        "marca": null,
+        "categoria": "conectores-rapidos-pu-racores-pu",
+        "diametro_tubing": null,
+        "tipo_conector": null,
+        "tipo_hilo": "1/2",
+        "material": "latón"
+    },
+    {
+        "nombre": "Acople rápido aire HE 3/8\" BSP tipo alemán DN7.2",
+        "descripcion": "Acople rápido neumático tipo alemán HE 3/8\" BSP DN7.2 , fabricado en latón amarillo , ideal para conectar y desconectar herramientas de aire comprimido de manera rápida y confiable. Perfecto para talleres, compresores y sistemas industriales de flujo medio.",
+        "precio": 3099,
+        "url_producto": "https://sanflex.cl/acoples-rapidos/315-acople-rápido-aire-he-38-bsp-tipo-alemán-dn72.html",
+        "url_imagen": "https://sanflex.cl/1025-large_default/acople-rápido-aire-he-38-bsp-tipo-alemán-dn72.jpg",
+        "marca": null,
+        "categoria": "conectores-rapidos-pu-racores-pu",
+        "diametro_tubing": null,
+        "tipo_conector": null,
+        "tipo_hilo": "3/8",
+        "material": "latón"
+    },
+    {
+        "nombre": "Acople rápido aire HE 1/4\" BSP tipo alemán DN7.2",
+        "descripcion": "Acople rápido neumático tipo alemán HE 1/4\" BSP DN7.2 , fabricado en latón amarillo , ideal para conectar y desconectar herramientas de aire comprimido de manera rápida y confiable. Perfecto para talleres, compresores y sistemas industriales.",
+        "precio": 3099,
+        "url_producto": "https://sanflex.cl/acoples-rapidos/314-acople-rápido-aire-he-14-bsp-tipo-alemán-dn72.html",
+        "url_imagen": "https://sanflex.cl/1020-large_default/acople-rápido-aire-he-14-bsp-tipo-alemán-dn72.jpg",
+        "marca": null,
+        "categoria": "conectores-rapidos-pu-racores-pu",
+        "diametro_tubing": null,
+        "tipo_conector": null,
+        "tipo_hilo": "1/4",
+        "material": "latón"
+    }
+]

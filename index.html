@@ -1,0 +1,637 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VAIR — Componentes & Repuestos Chile</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <header class="site-header" id="site-header">
+    <div class="container">
+      <div class="header-inner">
+
+        <a href="#" class="logo logo-vair" onclick="showPage('home'); return false;" aria-label="VAIR">
+          <img src="vair.png" alt="VAIR" class="logo-img" />
+        </a>
+
+        <nav class="site-nav">
+          <ul class="nav-list">
+            <li><a href="#" class="active" onclick="showPage('home'); return false;">Inicio</a></li>
+            <li><a href="#" onclick="showPage('catalog'); return false;">Productos</a></li>
+            <li><a href="#" onclick="scrollToSection('footer'); return false;">Contacto</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <div class="search-bar">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="m21 21-4.35-4.35" />
+            </svg>
+            <input type="text" placeholder="Buscar productos..." id="search-input" oninput="handleSearch(this.value)" />
+          </div>
+
+          <button class="icon-btn" onclick="toggleCart()" aria-label="Carrito">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 0 1-8 0" />
+            </svg>
+            <span class="cart-count" id="cart-count">0</span>
+          </button>
+
+          <button class="menu-toggle" onclick="toggleMobileNav()" aria-label="Menú">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="#" onclick="showPage('home'); toggleMobileNav(); return false;">🏠 Inicio</a>
+    <a href="#" onclick="showPage('catalog'); toggleMobileNav(); return false;">📦 Productos</a>
+    <a href="#" onclick="scrollToSection('categorias'); toggleMobileNav(); return false;">🗂️ Categorías</a>
+    <a href="#" onclick="scrollToSection('marcas'); toggleMobileNav(); return false;">🏷️ Marcas</a>
+    <a href="#" onclick="scrollToSection('footer'); toggleMobileNav(); return false;">📞 Contacto</a>
+  </nav>
+
+
+  <div class="page-view active" id="page-home">
+
+
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-grid"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1 class="hero-title">
+              Soluciones
+              <em>Neumaticas</em>
+              Industriales
+            </h1>
+            <p class="hero-desc">
+              Conectores, racores, válvulas y tubing PU para la industria chilena. VAIR cuenta con stock permanente y
+              despacho inmediato a todo el país.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-orange btn-lg" onclick="showPage('catalog')">
+                Ver catálogo
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14" />
+                  <path d="m12 5 7 7-7 7" />
+                </svg>
+              </button>
+              <button class="btn btn-outline-white btn-lg" onclick="scrollToSection('categorias')">
+                Categorías
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="features-strip">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="3" width="15" height="13" />
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+            </div>
+            <div>
+              <div class="feature-title">Despacho nacional</div>
+              <div class="feature-desc">Envío a lo largo de chile</div>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+            </div>
+            <div>
+              <div class="feature-title">Productos certificados</div>
+              <div class="feature-desc">Calidad industrial garantizada</div>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.42 2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6.13 6.13l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+            </div>
+            <div>
+              <div class="feature-title">Soporte técnico</div>
+              <div class="feature-desc">Asesoría especializada</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <section class="section" id="categorias">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="section-label">Navega por tipo</div>
+            <h2 class="section-title">Categorías <em>principales</em></h2>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="showPage('catalog')">Ver todo</button>
+        </div>
+        <div class="cats-grid">
+
+          <div class="cat-card fade-up" onclick="filterCatalog('conectores')">
+            <div class="cat-card-bg">
+              <div class="cat-card-bg-inner">
+                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.2">
+                  <circle cx="60" cy="60" r="50" stroke="#4B82CC" stroke-width="4" />
+                  <circle cx="60" cy="60" r="30" fill="#4B82CC" />
+                  <rect x="10" y="55" width="40" height="10" rx="5" fill="white" />
+                  <rect x="70" y="55" width="40" height="10" rx="5" fill="white" />
+                </svg>
+              </div>
+            </div>
+            <div class="cat-card-overlay"></div>
+            <div class="cat-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 6h8" />
+                <path d="M8 12h8" />
+                <path d="M8 18h8" />
+                <rect x="2" y="2" width="4" height="20" rx="2" />
+                <rect x="18" y="2" width="4" height="20" rx="2" />
+              </svg>
+            </div>
+            <div class="cat-card-content">
+              <div class="cat-card-label">VAIR</div>
+              <div class="cat-card-name">Conectores Rápidos</div>
+              <div class="cat-card-count">142 productos</div>
+            </div>
+            <div class="cat-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="cat-card fade-up" onclick="filterCatalog('tubing')">
+            <div class="cat-card-bg">
+              <div class="cat-card-bg-inner">
+                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.2">
+                  <path d="M10 60 Q30 20 60 60 Q90 100 110 60" stroke="#22C55E" stroke-width="12" fill="none"
+                    stroke-linecap="round" />
+                  <path d="M10 60 Q30 20 60 60 Q90 100 110 60" stroke="white" stroke-width="4" fill="none"
+                    stroke-linecap="round" />
+                </svg>
+              </div>
+            </div>
+            <div class="cat-card-overlay"></div>
+            <div class="cat-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 0 1 18 0" />
+                <path d="M3 12a9 9 0 0 0 18 0" />
+                <path d="M3 12h18" />
+              </svg>
+            </div>
+            <div class="cat-card-content">
+              <div class="cat-card-label">VAIR</div>
+              <div class="cat-card-name">Tubing PU</div>
+              <div class="cat-card-count">87 productos</div>
+            </div>
+            <div class="cat-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="cat-card fade-up" onclick="filterCatalog('valvulas')">
+            <div class="cat-card-bg">
+              <div class="cat-card-bg-inner">
+                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.2">
+                  <rect x="20" y="40" width="80" height="40" rx="8" fill="#F97316" />
+                  <circle cx="60" cy="60" r="16" fill="white" opacity="0.5" />
+                  <rect x="55" y="15" width="10" height="30" rx="5" fill="white" />
+                </svg>
+              </div>
+            </div>
+            <div class="cat-card-overlay"></div>
+            <div class="cat-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                <path d="M4.93 4.93a10 10 0 0 0 0 14.14" />
+              </svg>
+            </div>
+            <div class="cat-card-content">
+              <div class="cat-card-label">VAIR</div>
+              <div class="cat-card-name">Válvulas</div>
+              <div class="cat-card-count">64 productos</div>
+            </div>
+            <div class="cat-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+
+          <div class="cat-card fade-up" onclick="filterCatalog('racores')">
+            <div class="cat-card-bg">
+              <div class="cat-card-bg-inner">
+                <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.2">
+                  <polygon points="60,10 110,40 110,80 60,110 10,80 10,40" fill="#8B5CF6" opacity="0.6" />
+                  <circle cx="60" cy="60" r="20" fill="white" opacity="0.4" />
+                  <circle cx="60" cy="60" r="8" fill="#8B5CF6" />
+                </svg>
+              </div>
+            </div>
+            <div class="cat-card-overlay"></div>
+            <div class="cat-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2" />
+                <circle cx="12" cy="12" r="4" />
+              </svg>
+            </div>
+            <div class="cat-card-content">
+              <div class="cat-card-label">VAIR</div>
+              <div class="cat-card-name">Racores & Fittings</div>
+              <div class="cat-card-count">218 productos</div>
+            </div>
+            <div class="cat-card-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PRODUCTS -->
+    <section class="section" style="background: var(--c-white); border-top: 1px solid var(--c-border);" id="destacados">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">Productos <em>destacados</em></h2>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="showPage('catalog')">Ver catálogo completo</button>
+        </div>
+        <div class="products-grid" id="featured-grid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+
+
+  </div>
+
+  <div class="page-view" id="page-catalog">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="#" onclick="showPage('home'); return false;">Inicio</a>
+        <span>›</span>
+        <span class="current" id="catalog-breadcrumb">Todos los productos</span>
+      </div>
+
+      <div class="catalog-layout">
+        <!-- Sidebar -->
+        <aside class="catalog-sidebar">
+          <div class="sidebar-block">
+            <div class="sidebar-title">Categorías</div>
+            <ul class="sidebar-cats">
+              <li><button class="sidebar-cat-btn active" onclick="filterCatalog('all')">Todos <span>511</span></button>
+              </li>
+              <li><button class="sidebar-cat-btn" onclick="filterCatalog('conectores')">Conectores Rápidos
+                  <span>142</span></button></li>
+              <li><button class="sidebar-cat-btn" onclick="filterCatalog('tubing')">Tubing PU <span>87</span></button>
+              </li>
+              <li><button class="sidebar-cat-btn" onclick="filterCatalog('valvulas')">Válvulas <span>64</span></button>
+              </li>
+              <li><button class="sidebar-cat-btn" onclick="filterCatalog('racores')">Racores & Fittings
+                  <span>218</span></button></li>
+            </ul>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-title">Marca</div>
+            <ul class="sidebar-checks">
+              <li><label><input type="checkbox" onchange="applyFilters()" data-brand="FESTO" /> FESTO</label></li>
+              <li><label><input type="checkbox" onchange="applyFilters()" data-brand="SMC" /> SMC</label></li>
+              <li><label><input type="checkbox" onchange="applyFilters()" data-brand="PARKER" /> PARKER</label></li>
+              <li><label><input type="checkbox" onchange="applyFilters()" data-brand="CAMOZZI" /> CAMOZZI</label></li>
+              <li><label><input type="checkbox" onchange="applyFilters()" data-brand="AIRTAC" /> AIRTAC</label></li>
+            </ul>
+          </div>
+
+          <div class="sidebar-block">
+            <div class="sidebar-title">Precio</div>
+            <div class="price-range">
+              <div class="price-inputs">
+                <input type="number" placeholder="Mín" id="price-min" onchange="applyFilters()" />
+                <span>—</span>
+                <input type="number" placeholder="Máx" id="price-max" onchange="applyFilters()" />
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main -->
+        <div class="catalog-main">
+          <div class="catalog-toolbar">
+            <div class="catalog-result-count" id="catalog-count">Mostrando todos los productos</div>
+            <div class="catalog-sort">
+              <select onchange="sortCatalog(this.value)">
+                <option value="default">Ordenar por: Relevancia</option>
+                <option value="price-asc">Precio: menor a mayor</option>
+                <option value="price-desc">Precio: mayor a menor</option>
+                <option value="name">Nombre A–Z</option>
+              </select>
+            </div>
+          </div>
+          <div class="products-grid" id="catalog-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================
+     PAGE: PRODUCT DETAIL
+     ============================ -->
+  <div class="page-view" id="page-product">
+    <div class="container">
+      <div class="breadcrumb" id="product-breadcrumb"></div>
+      <div class="product-layout product-page">
+        <!-- Gallery -->
+        <div class="product-gallery">
+          <div class="gallery-main" id="gallery-main-img"></div>
+          <div class="gallery-thumbs" id="gallery-thumbs"></div>
+        </div>
+
+        <!-- Info -->
+        <div class="product-detail-info">
+          <div class="product-detail-brand" id="detail-brand"></div>
+          <h1 class="product-detail-title" id="detail-title"></h1>
+          <div class="product-detail-sku" id="detail-sku"></div>
+          <div class="product-detail-rating">
+            <span style="font-size:14px;color:var(--c-text-muted)" id="detail-reviews"></span>
+          </div>
+          <div class="product-detail-price">
+            <span class="product-detail-price-main" id="detail-price"></span>
+          </div>
+          <div class="iva-note">Precio incluye IVA · Facturable a empresa</div>
+          <p class="product-detail-desc" id="detail-desc"></p>
+
+          <!-- Qty -->
+          <div class="option-label" style="margin-bottom:8px">Cantidad</div>
+          <div class="qty-selector" style="margin-bottom:20px">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <div class="qty-value" id="qty-display">1</div>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+
+          <div class="buy-actions">
+            <button class="btn btn-orange btn-lg" onclick="addCurrentToCart()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 0 1-8 0" />
+              </svg>
+              Agregar al carrito
+            </button>
+            <button class="btn btn-outline">Solicitar cotización</button>
+          </div>
+
+          <div class="product-meta">
+            <div class="meta-row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="1" y="3" width="15" height="13" />
+                <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                <circle cx="5.5" cy="18.5" r="2.5" />
+                <circle cx="18.5" cy="18.5" r="2.5" />
+              </svg>
+              <span>Despacho: <strong>1–3 días hábiles</strong></span>
+            </div>
+            <div class="meta-row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+              </svg>
+              <span>Producto <strong>certificado y garantizado</strong></span>
+            </div>
+            <div class="meta-row">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.42 2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6.13 6.13l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+              </svg>
+              <span>Soporte técnico: <strong>+56 2 2345 6789</strong></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="product-tabs">
+        <div class="tabs-nav">
+          <button class="tab-btn active" onclick="switchTab(this,'tab-desc')">Descripción</button>
+          <button class="tab-btn" onclick="switchTab(this,'tab-specs')">Especificaciones</button>
+          <button class="tab-btn" onclick="switchTab(this,'tab-docs')">Documentos</button>
+        </div>
+        <div class="tab-panel active" id="tab-desc">
+          <p id="tab-desc-text"></p>
+          <p>Todos nuestros productos neumáticos cumplen con estándares internacionales ISO y DIN. Fabricados con
+            materiales de alta resistencia a la presión, corrosión y temperatura, ideales para ambientes industriales
+            exigentes.</p>
+        </div>
+        <div class="tab-panel" id="tab-specs">
+          <table class="specs-table" id="specs-table"></table>
+        </div>
+        <div class="tab-panel" id="tab-docs">
+          <p>📄 Ficha técnica disponible bajo solicitud. Contáctenos para acceder a datasheets, certificados CE y
+            documentación de instalación.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <footer class="site-footer" id="footer">
+    <div class="container">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <div class="logo logo-vair">
+            <img src="vair.png" alt="VAIR" class="logo-img" />
+          </div>
+          <p class="footer-tagline">VAIR es especialista en componentes neumáticos para la industria chilena, con
+            productos para aire comprimido, automatización y mantenimiento industrial.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-btn" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+            <a href="#" class="social-btn" aria-label="WhatsApp">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Productos</div>
+          <ul class="footer-links">
+            <li><a href="#" onclick="filterCatalog('conectores'); return false;">Conectores Rápidos</a></li>
+            <li><a href="#" onclick="filterCatalog('tubing'); return false;">Tubing PU</a></li>
+            <li><a href="#" onclick="filterCatalog('valvulas'); return false;">Válvulas</a></li>
+            <li><a href="#" onclick="filterCatalog('racores'); return false;">Racores & Fittings</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Soporte</div>
+          <ul class="footer-links">
+            <li><a href="#">Cómo comprar</a></li>
+            <li><a href="#">Seguimiento de pedido</a></li>
+            <li><a href="#">Política de devolución</a></li>
+            <li><a href="#">Garantías</a></li>
+            <li><a href="#">Preguntas frecuentes</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Contacto</div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.42 2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6.13 6.13l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+            </svg>
+            <div>
+              <strong>+56 2 2345 6789</strong>
+              <span>Lunes a viernes 8:30–18:00</span>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <div>
+              <strong>ventas@vair.cl</strong>
+              <span>Respondemos en menos de 2h</span>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+              <circle cx="12" cy="10" r="3" />
+            </svg>
+            <div>
+              <strong>Santiago, Chile</strong>
+              <span>Av. Vicuña Mackenna 1234, Of. 502</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copy">© 2025 VAIR · RUT 76.XXX.XXX-X</div>
+        <div class="footer-bottom-links">
+          <a href="#">Términos de uso</a>
+          <a href="#">Privacidad</a>
+          <a href="#">Facturación</a>
+        </div>
+        <div class="payment-icons">
+          <span class="pay-icon">WEBPAY</span>
+          <span class="pay-icon">TRANSF</span>
+          <span class="pay-icon">OC</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ============================
+     CART DRAWER
+     ============================ -->
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-head">
+      <div>
+        <span class="cart-head-title">Carrito</span>
+        <span class="cart-head-count" id="cart-head-count">0 artículos</span>
+      </div>
+      <button class="close-btn" onclick="toggleCart()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cart-items-list"></div>
+    <div class="cart-footer" id="cart-footer" style="display:none">
+      <div class="cart-subtotal">
+        <span class="cart-subtotal-label">Subtotal</span>
+        <span class="cart-subtotal-amount" id="cart-total">$0</span>
+      </div>
+      <div class="cart-iva">Precio incluye IVA · Envío calculado al pagar</div>
+      <button class="btn btn-orange" onclick="showToast('¡Función de pago próximamente!', 'success')">Ir a
+        pagar</button>
+      <button class="btn btn-outline" onclick="toggleCart()">Seguir comprando</button>
+    </div>
+  </div>
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
