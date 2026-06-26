@@ -9,7 +9,9 @@ const CATEGORY_ALIASES = {
   valvulas: "racores"
 };
 
-const state = {
+const WHATSAPP_NUMBER = "56948543511";
+
+window._vairState = window._vairState || {
   products: [],
   filtered: [],
   category: "all",
@@ -19,6 +21,7 @@ const state = {
   currentProduct: null,
   currentQty: 1
 };
+const state = window._vairState;
 
 const money = new Intl.NumberFormat("es-CL", {
   style: "currency",
@@ -90,7 +93,7 @@ function repairMojibake(value) {
   try {
     const bytes = new Uint8Array([...value].map((char) => char.charCodeAt(0) & 255));
     const decoded = new TextDecoder("utf-8").decode(bytes);
-    return decoded.includes("�") ? value : decoded;
+    return decoded.includes("?") ? value : decoded;
   } catch {
     return value;
   }
@@ -105,7 +108,7 @@ function renderAll() {
   renderSidebar();
   applyFilters();
   renderFeatured();
-  updateCart();
+  updateQuote();
 }
 
 function renderCategoryCards() {
@@ -237,12 +240,12 @@ function renderFeatured() {
   if (!grid) return;
 
   const featured = state.products.slice(0, 8);
-
   grid.innerHTML = featured.map(renderProductCard).join("");
 }
 
 function renderProductCard(product) {
   const badge = `<span class="product-badge badge-new">${escapeHtml(product.categoryName.split(" ")[0])}</span>`;
+  const inQuote = state.cart.some((item) => item.id === product.id);
 
   return `
     <article class="product-card" onclick="openProduct('${product.id}')">
@@ -260,18 +263,18 @@ function renderProductCard(product) {
         <h3 class="product-name">${escapeHtml(product.name)}</h3>
         <div class="product-sku">${escapeHtml(product.sku)}${product.diameter ? ` · ${escapeHtml(product.diameter)}` : ""}</div>
         <div class="product-rating">
-          <span class="rating-count">Stock disponible</span>
+          <span class="stock-badge">✔ Stock disponible</span>
         </div>
         <div class="product-price-row">
           <span class="price-main">${money.format(product.price)}</span>
         </div>
-        <button class="btn btn-orange btn-sm" onclick="event.stopPropagation(); addToCart('${product.id}')">Agregar</button>
+        <button class="btn btn-orange btn-sm ${inQuote ? 'btn-in-quote' : ''}" onclick="event.stopPropagation(); addToQuote('${product.id}')">
+          ${inQuote ? '✔ En cotización' : 'Agregar a cotización'}
+        </button>
       </div>
     </article>
   `;
 }
-
-
 
 function openProduct(productId) {
   const product = state.products.find((item) => item.id === productId);
@@ -286,7 +289,7 @@ function openProduct(productId) {
   setText("detail-price", money.format(product.price));
   setText("detail-desc", product.description);
   setText("tab-desc-text", product.description);
-  setText("detail-reviews", "Stock disponible");
+  setText("detail-reviews", "✔ Stock disponible");
   setText("qty-display", "1");
 
   const gallery = document.getElementById("gallery-main-img");
@@ -341,67 +344,106 @@ function changeQty(delta) {
   setText("qty-display", String(state.currentQty));
 }
 
-function addCurrentToCart() {
+function addCurrentToQuote() {
   if (!state.currentProduct) return;
-  addToCart(state.currentProduct.id, state.currentQty);
+  addToQuote(state.currentProduct.id, state.currentQty);
 }
 
-function addToCart(productId, qty = 1) {
+function addToQuote(productId, qty = 1) {
   const product = state.products.find((item) => item.id === productId);
   if (!product) return;
 
   const existing = state.cart.find((item) => item.id === productId);
-  if (existing) existing.qty += qty;
-  else state.cart.push({ id: productId, qty });
+  if (existing) {
+    existing.qty += qty;
+    showToast("Cantidad actualizada en la cotización");
+  } else {
+    state.cart.push({ id: productId, qty });
+    showToast("Producto agregado a la cotización ✔");
+  }
 
-  updateCart();
-  showToast("Producto agregado al carrito", "success");
+  updateQuote();
+  // re-render tarjetas para actualizar el estado del botón
+  renderCatalog();
+  renderFeatured();
 }
 
-function updateCart() {
+function updateQuote() {
   const count = state.cart.reduce((total, item) => total + item.qty, 0);
-  const total = state.cart.reduce((sum, item) => {
-    const product = state.products.find((entry) => entry.id === item.id);
-    return sum + (product ? product.price * item.qty : 0);
-  }, 0);
 
   setText("cart-count", String(count));
-  setText("cart-head-count", `${count} articulo${count === 1 ? "" : "s"}`);
-  setText("cart-total", money.format(total));
+  setText("cart-head-count", `${count} producto${count === 1 ? "" : "s"}`);
 
   const list = document.getElementById("cart-items-list");
   const footer = document.getElementById("cart-footer");
   if (!list || !footer) return;
 
   footer.style.display = count ? "" : "none";
-  list.innerHTML = count ? state.cart.map(renderCartItem).join("") : `
+  list.innerHTML = count ? state.cart.map(renderQuoteItem).join("") : `
     <div class="cart-empty">
-      <div class="cart-empty-title">Tu carrito esta vacio</div>
-      <div class="cart-empty-sub">Agrega productos desde el catalogo.</div>
+      <div class="cart-empty-title">Tu cotización está vacía</div>
+      <div class="cart-empty-sub">Agrega productos desde el catálogo para solicitar una cotización.</div>
     </div>
   `;
 }
 
-function renderCartItem(item) {
+function renderQuoteItem(item) {
   const product = state.products.find((entry) => entry.id === item.id);
   if (!product) return "";
 
   return `
     <div class="cart-item">
-      <img class="cart-item-img" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" />
+      <img class="cart-item-img" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" onerror="this.style.display='none'" />
       <div class="cart-item-info">
         <div class="cart-item-name">${escapeHtml(product.name)}</div>
-        <div class="cart-item-meta">${item.qty} x ${money.format(product.price)}</div>
-        <div class="cart-item-price">${money.format(product.price * item.qty)}</div>
+        <div class="cart-item-meta">${escapeHtml(product.sku)}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn-sm" onclick="changeQuoteQty('${product.id}', -1)">−</button>
+          <span>${item.qty}</span>
+          <button class="qty-btn-sm" onclick="changeQuoteQty('${product.id}', 1)">+</button>
+        </div>
       </div>
-      <button class="close-btn" onclick="removeFromCart('${product.id}')" aria-label="Quitar">×</button>
+      <button class="close-btn" onclick="removeFromQuote('${product.id}')" aria-label="Quitar">×</button>
     </div>
   `;
 }
 
-function removeFromCart(productId) {
+function changeQuoteQty(productId, delta) {
+  const item = state.cart.find((i) => i.id === productId);
+  if (!item) return;
+  item.qty = Math.max(1, item.qty + delta);
+  updateQuote();
+}
+
+function removeFromQuote(productId) {
   state.cart = state.cart.filter((item) => item.id !== productId);
-  updateCart();
+  updateQuote();
+  renderCatalog();
+  renderFeatured();
+}
+
+function sendQuoteWhatsapp() {
+  if (state.cart.length === 0) {
+    showToast("Agrega al menos un producto antes de cotizar");
+    return;
+  }
+
+  let message = "Hola VAIR, me gustaría solicitar una *cotización* de los siguientes productos:\n\n";
+
+  state.cart.forEach((item, index) => {
+    const product = state.products.find((p) => p.id === item.id);
+    if (!product) return;
+    message += `${index + 1}. *${product.name}*\n`;
+    message += `   SKU: ${product.sku}\n`;
+    message += `   Cantidad: ${item.qty}\n`;
+    if (product.diameter) message += `   Diámetro: ${product.diameter}\n`;
+    message += "\n";
+  });
+
+  message += "Por favor confirmar disponibilidad y precio final. ¡Gracias!";
+
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
 }
 
 function toggleCart() {
@@ -468,7 +510,7 @@ function showLoadError() {
   ["catalog-grid", "featured-grid"].forEach((id) => {
     const el = document.getElementById(id);
     if (el) {
-      el.innerHTML = `<div class="catalog-empty">No se pudieron cargar los productos. Abre la pagina desde un servidor local para permitir la lectura de los JSON.</div>`;
+      el.innerHTML = `<div class="catalog-empty">No se pudieron cargar los productos. Abre la página desde un servidor local para permitir la lectura de los JSON.</div>`;
     }
   });
 }
@@ -495,4 +537,3 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
-
