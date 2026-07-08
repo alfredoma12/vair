@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /producto/
+
+Sitemap: https://www.vair.cl/sitemap.xml

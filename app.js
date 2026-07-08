@@ -1,8 +1,7 @@
-﻿const PRODUCT_SOURCES = [
-  { file: "sanflex.json", categoryId: "racores", categoryName: "Racores y conectores PU", shortName: "Racores" },
-  { file: "manguera-pu.json", categoryId: "tubing", categoryName: "Mangueras de poliuretano PU", shortName: "Tubing PU" },
-  { file: "acoples -rapidos.json", categoryId: "acoples", categoryName: "Acoples rapidos", shortName: "Acoples" }
-];
+const {
+  PRODUCT_SOURCES,
+  normalizeProduct
+} = window.VairCatalog;
 
 const CATEGORY_ALIASES = {
   conectores: "acoples",
@@ -32,7 +31,9 @@ const money = new Intl.NumberFormat("es-CL", {
 document.addEventListener("DOMContentLoaded", () => {
   revealAnimatedItems();
   loadProducts();
+  syncRouteFromHash();
   window.addEventListener("scroll", handleHeaderScroll, { passive: true });
+  window.addEventListener("hashchange", syncRouteFromHash);
 });
 
 function revealAnimatedItems() {
@@ -41,12 +42,13 @@ function revealAnimatedItems() {
 
 async function loadProducts() {
   try {
+    const seenSlugs = new Map();
     const sourceResults = await Promise.all(
       PRODUCT_SOURCES.map(async (source) => {
         const response = await fetch(encodeURI(source.file));
         if (!response.ok) throw new Error(`No se pudo cargar ${source.file}`);
         const items = await response.json();
-        return items.map((item, index) => normalizeProduct(item, source, index));
+        return items.map((item, index) => normalizeProduct(item, source, index, seenSlugs));
       })
     );
 
@@ -57,50 +59,6 @@ async function loadProducts() {
     console.error(error);
     showLoadError();
   }
-}
-
-function normalizeProduct(item, source, index) {
-  const price = Number(item.precio) || 0;
-  const name = cleanText(item.nombre || "Producto sin nombre");
-  const categoryText = cleanText(item.categoria || source.categoryName);
-
-  return {
-    id: `${source.categoryId}-${index}`,
-    name,
-    description: cleanText(item.descripcion || ""),
-    price,
-    productUrl: item.url_producto || "#",
-    image: item.url_imagen || "",
-    brand: cleanText(item.marca || source.shortName || "Sanflex"),
-    categoryId: source.categoryId,
-    categoryName: source.categoryName,
-    categoryText,
-    diameter: cleanText(item.diametro_tubing || ""),
-    connectorType: cleanText(item.tipo_conector || ""),
-    threadType: cleanText(item.tipo_hilo || ""),
-    material: cleanText(item.material || ""),
-    sku: makeSku(source.categoryId, index)
-  };
-}
-
-function cleanText(value) {
-  return repairMojibake(String(value)).replace(/\s+/g, " ").trim();
-}
-
-function repairMojibake(value) {
-  if (!/[ÃÂâ]/.test(value)) return value;
-
-  try {
-    const bytes = new Uint8Array([...value].map((char) => char.charCodeAt(0) & 255));
-    const decoded = new TextDecoder("utf-8").decode(bytes);
-    return decoded.includes("?") ? value : decoded;
-  } catch {
-    return value;
-  }
-}
-
-function makeSku(categoryId, index) {
-  return `${categoryId.slice(0, 3).toUpperCase()}-${String(index + 1).padStart(4, "0")}`;
 }
 
 function renderAll() {
@@ -248,94 +206,32 @@ function renderProductCard(product) {
   const inQuote = state.cart.some((item) => item.id === product.id);
 
   return `
-    <article class="product-card" onclick="openProduct('${product.id}')">
-      <div class="product-img-wrap">
-        <div class="product-img-inner">
-          <img class="product-photo" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" onerror="this.closest('.product-img-inner').innerHTML = productFallbackIcon();" />
+    <article class="product-card">
+      <a class="product-card-link" href="${escapeHtml(product.url)}" aria-label="Ver ${escapeHtml(product.name)}">
+        <div class="product-img-wrap">
+          <div class="product-img-inner">
+            <img class="product-photo" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" decoding="async" onerror="this.closest('.product-img-inner').innerHTML = productFallbackIcon();" />
+          </div>
+          ${badge}
         </div>
-        ${badge}
-        <button class="product-wish" onclick="event.stopPropagation(); this.classList.toggle('active')" aria-label="Favorito">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.35-9.33-8.2C.33 8.95 2.42 4 6.82 4c2.1 0 3.45 1.1 4.18 2.02C11.73 5.1 13.08 4 15.18 4c4.4 0 6.49 4.95 4.15 8.8C17 16.65 12 21 12 21z"/></svg>
-        </button>
-      </div>
-      <div class="product-info">
-        <div class="product-brand">${escapeHtml(product.brand)}</div>
-        <h3 class="product-name">${escapeHtml(product.name)}</h3>
-        <div class="product-sku">${escapeHtml(product.sku)}${product.diameter ? ` · ${escapeHtml(product.diameter)}` : ""}</div>
-        <div class="product-rating">
-          <span class="stock-badge">✔ Stock disponible</span>
+        <div class="product-info">
+          <div class="product-brand">${escapeHtml(product.brand)}</div>
+          <h3 class="product-name">${escapeHtml(product.name)}</h3>
+          <div class="product-sku">${escapeHtml(product.sku)}${product.diameter ? ` · ${escapeHtml(product.diameter)}` : ""}</div>
+          <div class="product-rating">
+            <span class="stock-badge">Stock disponible</span>
+          </div>
+          <div class="product-price-row">
+            <span class="price-main">${money.format(product.price)}</span>
+          </div>
         </div>
-        <div class="product-price-row">
-          <span class="price-main">${money.format(product.price)}</span>
-        </div>
-        <button class="btn btn-orange btn-sm ${inQuote ? 'btn-in-quote' : ''}" onclick="event.stopPropagation(); addToQuote('${product.id}')">
-          ${inQuote ? '✔ En cotización' : 'Agregar a cotización'}
+      </a>
+      <div class="product-card-actions">
+        <button class="btn btn-orange btn-sm ${inQuote ? "btn-in-quote" : ""}" onclick="addToQuote('${product.id}')">
+          ${inQuote ? "En cotización" : "Agregar a cotización"}
         </button>
       </div>
     </article>
-  `;
-}
-
-function openProduct(productId) {
-  const product = state.products.find((item) => item.id === productId);
-  if (!product) return;
-
-  state.currentProduct = product;
-  state.currentQty = 1;
-
-  setText("detail-brand", product.brand);
-  setText("detail-title", product.name);
-  setText("detail-sku", product.sku);
-  setText("detail-price", money.format(product.price));
-  setText("detail-desc", product.description);
-  setText("tab-desc-text", product.description);
-  setText("detail-reviews", "✔ Stock disponible");
-  setText("qty-display", "1");
-
-  const gallery = document.getElementById("gallery-main-img");
-  if (gallery) {
-    gallery.innerHTML = `<img class="detail-photo" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" onerror="this.outerHTML = productFallbackIcon();" />`;
-  }
-
-  const thumbs = document.getElementById("gallery-thumbs");
-  if (thumbs) {
-    thumbs.innerHTML = `<button class="gallery-thumb active"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" /></button>`;
-  }
-
-  renderSpecs(product);
-  renderProductBreadcrumb(product);
-  showPage("product");
-}
-
-function renderSpecs(product) {
-  const table = document.getElementById("specs-table");
-  if (!table) return;
-
-  const rows = [
-    ["Categoría", product.categoryName],
-    ["Marca", product.brand],
-    ["Material", product.material || "No especificado"],
-    ["Diámetro tubing", product.diameter || "No aplica"],
-    ["Tipo conector", product.connectorType || "No aplica"],
-    ["Tipo hilo", product.threadType || "No aplica"],
-    ["SKU", product.sku]
-  ];
-
-  table.innerHTML = rows.map(([label, value]) => (
-    `<tr><th>${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`
-  )).join("");
-}
-
-function renderProductBreadcrumb(product) {
-  const breadcrumb = document.getElementById("product-breadcrumb");
-  if (!breadcrumb) return;
-
-  breadcrumb.innerHTML = `
-    <a href="#" onclick="showPage('home'); return false;">Inicio</a>
-    <span>›</span>
-    <a href="#" onclick="filterCatalog('${product.categoryId}'); return false;">${escapeHtml(product.categoryName)}</a>
-    <span>›</span>
-    <span class="current">${escapeHtml(product.name)}</span>
   `;
 }
 
@@ -359,11 +255,10 @@ function addToQuote(productId, qty = 1) {
     showToast("Cantidad actualizada en la cotización");
   } else {
     state.cart.push({ id: productId, qty });
-    showToast("Producto agregado a la cotización ✔");
+    showToast("Producto agregado a la cotización");
   }
 
   updateQuote();
-  // re-render tarjetas para actualizar el estado del botón
   renderCatalog();
   renderFeatured();
 }
@@ -393,17 +288,19 @@ function renderQuoteItem(item) {
 
   return `
     <div class="cart-item">
-      <img class="cart-item-img" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" onerror="this.style.display='none'" />
+      <a href="${escapeHtml(product.url)}" aria-label="Ver ${escapeHtml(product.name)}">
+        <img class="cart-item-img" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy" decoding="async" onerror="this.style.display='none'" />
+      </a>
       <div class="cart-item-info">
-        <div class="cart-item-name">${escapeHtml(product.name)}</div>
+        <a class="cart-item-name" href="${escapeHtml(product.url)}">${escapeHtml(product.name)}</a>
         <div class="cart-item-meta">${escapeHtml(product.sku)}</div>
         <div class="cart-item-qty">
-          <button class="qty-btn-sm" onclick="changeQuoteQty('${product.id}', -1)">−</button>
+          <button class="qty-btn-sm" onclick="changeQuoteQty('${product.id}', -1)">-</button>
           <span>${item.qty}</span>
           <button class="qty-btn-sm" onclick="changeQuoteQty('${product.id}', 1)">+</button>
         </div>
       </div>
-      <button class="close-btn" onclick="removeFromQuote('${product.id}')" aria-label="Quitar">×</button>
+      <button class="close-btn" onclick="removeFromQuote('${product.id}')" aria-label="Quitar">x</button>
     </div>
   `;
 }
@@ -428,22 +325,22 @@ function sendQuoteWhatsapp() {
     return;
   }
 
-  let message = "Hola VAIR, me gustaría solicitar una *cotización* de los siguientes productos:\n\n";
+  let message = "Hola VAIR, me gustaría solicitar una cotización de los siguientes productos:\n\n";
 
   state.cart.forEach((item, index) => {
     const product = state.products.find((p) => p.id === item.id);
     if (!product) return;
-    message += `${index + 1}. *${product.name}*\n`;
+    message += `${index + 1}. ${product.name}\n`;
     message += `   SKU: ${product.sku}\n`;
     message += `   Cantidad: ${item.qty}\n`;
     if (product.diameter) message += `   Diámetro: ${product.diameter}\n`;
-    message += "\n";
+    message += `   URL: ${product.absoluteUrl}\n\n`;
   });
 
-  message += "Por favor confirmar disponibilidad y precio final. ¡Gracias!";
+  message += "Por favor confirmar disponibilidad y precio final. Gracias.";
 
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-  window.open(url, "_blank");
+  window.open(url, "_blank", "noopener");
 }
 
 function toggleCart() {
@@ -461,6 +358,13 @@ function showPage(pageId) {
   });
   activeLink?.classList.add("active");
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function syncRouteFromHash() {
+  const hash = window.location.hash.replace("#", "");
+  if (hash === "catalogo" || hash === "productos") {
+    showPage("catalog");
+  }
 }
 
 function scrollToSection(sectionId) {

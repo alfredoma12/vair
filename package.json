@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "build": "node scripts/generate-product-pages.js",
+    "serve": "node scripts/serve-static.js"
+  }
+}
