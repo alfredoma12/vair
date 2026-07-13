@@ -6,29 +6,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ═══ SEO PRIMARY ═══ -->
-  <title>VAIR | Racores, Tubing PU y Acoples Neumáticos Chile — Cotiza en línea</title>
-  <meta name="description" content="Distribuidor de componentes neumáticos industriales en Chile. Racores PU, mangueras tubing, acoples rápidos y conectores con stock permanente. Cotiza por WhatsApp y despacho a todo Chile en 1–3 días hábiles." />
+  <title>VAIR Chile | Racores PU, tubing y acoples neumáticos para industria</title>
+  <meta name="description" content="VAIR Chile distribuye racores PU, tubing de poliuretano y acoples rápidos con stock permanente para la industria. Cotiza por WhatsApp y despacha a todo Chile." />
   <meta name="keywords" content="racores neumáticos Chile, tubing PU Chile, acoples rápidos neumáticos, conectores poliuretano, componentes neumáticos industriales Santiago, mangueras PU, distribuidor neumático Chile, VAIR neumática" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="VAIR Chile" />
-  <link rel="canonical" href="https://www.vair.cl/" />
+  <meta name="theme-color" content="#ff7a00" />
+  <meta name="color-scheme" content="light only" />
+  <!-- SEO: el canonico se mantiene en una sola URL para evitar errores de redirección y duplicados en Search Console. -->
+  <link rel="canonical" href="https://vair.cl/" />
+  <link rel="alternate" hreflang="es-cl" href="https://vair.cl/" />
+  <link rel="alternate" hreflang="x-default" href="https://vair.cl/" />
 
   <!-- ═══ OPEN GRAPH (Facebook, LinkedIn, WhatsApp preview) ═══ -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="VAIR Chile" />
   <meta property="og:title" content="VAIR | Racores, Tubing PU y Acoples Neumáticos — Cotiza Online" />
   <meta property="og:description" content="Stock permanente de racores PU, mangueras tubing y acoples rápidos para la industria chilena. Cotización inmediata por WhatsApp." />
-  <meta property="og:url" content="https://www.vair.cl/" />
-  <meta property="og:image" content="https://www.vair.cl/og-vair.jpg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://vair.cl/" />
+  <!-- SEO: se usa una imagen real del repositorio; og-vair.jpg no existia y podia fallar en previews/validadores. -->
+  <meta property="og:image" content="https://vair.cl/banner.png" />
+  <meta property="og:image:alt" content="VAIR Chile - Componentes neumáticos industriales" />
+  <meta property="og:image:width" content="640" />
+  <meta property="og:image:height" content="234" />
   <meta property="og:locale" content="es_CL" />
 
   <!-- ═══ TWITTER CARD ═══ -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="VAIR | Componentes Neumáticos Industriales Chile" />
   <meta name="twitter:description" content="Racores PU, tubing y acoples rápidos con stock permanente. Cotiza por WhatsApp." />
-  <meta name="twitter:image" content="https://www.vair.cl/og-vair.jpg" />
+  <meta name="twitter:image" content="https://vair.cl/banner.png" />
 
   <!-- ═══ GEO / LOCAL SEO ═══ -->
   <meta name="geo.region" content="CL-RM" />
@@ -43,12 +50,12 @@
     "@graph": [
       {
         "@type": "Organization",
-        "@id": "https://www.vair.cl/#organization",
+        "@id": "https://vair.cl/#organization",
         "name": "VAIR Chile",
-        "url": "https://www.vair.cl/",
+        "url": "https://vair.cl/",
         "logo": {
           "@type": "ImageObject",
-          "url": "https://www.vair.cl/vair.png"
+          "url": "https://vair.cl/vair.png"
         },
         "contactPoint": [
           {
@@ -76,26 +83,26 @@
       },
       {
         "@type": "WebSite",
-        "@id": "https://www.vair.cl/#website",
-        "url": "https://www.vair.cl/",
+        "@id": "https://vair.cl/#website",
+        "url": "https://vair.cl/",
         "name": "VAIR Chile — Componentes Neumáticos Industriales",
         "description": "Distribuidor de racores PU, tubing de poliuretano y acoples rápidos neumáticos para la industria chilena.",
-        "publisher": { "@id": "https://www.vair.cl/#organization" },
+        "publisher": { "@id": "https://vair.cl/#organization" },
         "potentialAction": {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://www.vair.cl/?q={search_term_string}"
+            "urlTemplate": "https://vair.cl/?q={search_term_string}"
           },
           "query-input": "required name=search_term_string"
         }
       },
       {
-        "@type": "Store",
-        "@id": "https://www.vair.cl/#store",
+        "@type": "LocalBusiness",
+        "@id": "https://vair.cl/#store",
         "name": "VAIR Chile",
-        "image": "https://www.vair.cl/og-vair.jpg",
-        "url": "https://www.vair.cl/",
+        "image": "https://vair.cl/banner.png",
+        "url": "https://vair.cl/",
         "telephone": "+56948543511",
         "email": "ventas@vair.cl",
         "address": {
@@ -113,6 +120,16 @@
         "priceRange": "$$",
         "currenciesAccepted": "CLP",
         "paymentAccepted": "Transferencia bancaria, cheque, factura empresarial"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://vair.cl/#webpage",
+        "url": "https://vair.cl/",
+        "name": "VAIR Chile | Componentes Neumáticos Industriales",
+        "description": "Catálogo de racores PU, tubing de poliuretano y acoples rápidos neumáticos para cotizar en Chile.",
+        "inLanguage": "es-CL",
+        "isPartOf": { "@id": "https://vair.cl/#website" },
+        "publisher": { "@id": "https://vair.cl/#organization" }
       },
       {
         "@type": "FAQPage",
@@ -158,11 +175,14 @@
   <!-- ═══ PERFORMANCE & PRELOADS ═══ -->
   <link rel="preconnect" href="https://sanflex.cl" />
   <link rel="dns-prefetch" href="https://sanflex.cl" />
+  <link rel="preload" href="styles.css" as="style" />
+  <link rel="preload" href="/vair.png" as="image" />
 
   <!-- ═══ FAVICON BASICS ═══ -->
-  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <!-- SEO/performance: se elimina favicon.ico porque no existe; usar vair.png evita 404 en rastreo y navegador. -->
   <link rel="icon" href="/vair.png" type="image/png" />
   <link rel="apple-touch-icon" href="/vair.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
 
   <link rel="stylesheet" href="styles.css" />
 
@@ -276,16 +296,15 @@
 </head>
 
 <body>
-
   <header class="site-header" id="site-header">
     <div class="container">
       <div class="header-inner">
 
-        <a href="#" class="logo logo-vair" onclick="showPage('home'); return false;" aria-label="VAIR">
+        <a href="/" class="logo logo-vair" onclick="showPage('home'); return false;" aria-label="VAIR Chile">
           <img src="vair.png" alt="VAIR Chile — Componentes Neumáticos Industriales" class="logo-img" width="120" height="40" />
         </a>
 
-        <nav class="site-nav">
+        <nav class="site-nav" aria-label="Navegación principal">
           <ul class="nav-list">
             <li><a href="/" class="active" onclick="showPage('home'); return false;">Inicio</a></li>
             <li><a href="/#catalogo" onclick="showPage('catalog'); return false;">Productos</a></li>
@@ -300,7 +319,7 @@
               <circle cx="11" cy="11" r="8" />
               <path d="m21 21-4.35-4.35" />
             </svg>
-            <input type="text" placeholder="Buscar productos..." id="search-input" oninput="handleSearch(this.value)" />
+            <input type="search" id="search-input" oninput="handleSearch(this.value)" autocomplete="off" aria-label="Buscar productos" placeholder="Buscar productos" />
           </div>
 
           <button class="icon-btn" onclick="toggleCart()" aria-label="Cotización">
@@ -325,7 +344,7 @@
   </header>
 
   <!-- Mobile Nav -->
-  <nav class="mobile-nav" id="mobile-nav">
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Navegación móvil">
     <a href="/" onclick="showPage('home'); toggleMobileNav(); return false;">🏠 Inicio</a>
     <a href="/#catalogo" onclick="showPage('catalog'); toggleMobileNav(); return false;">📦 Productos</a>
     <a href="#" onclick="scrollToSection('categorias'); toggleMobileNav(); return false;">🗂️ Categorías</a>
@@ -333,6 +352,9 @@
     <a href="#" onclick="scrollToSection('footer'); toggleMobileNav(); return false;">📞 Contacto</a>
   </nav>
 
+
+  <!-- SEO: main unico para que Google y lectores de pantalla identifiquen el contenido principal. -->
+  <main id="main-content">
 
   <div class="page-view active" id="page-home">
 
@@ -427,11 +449,11 @@
           <button class="btn btn-outline btn-sm" onclick="showPage('catalog')">Ver todo</button>
         </div>
         <div class="cats-grid">
-          <div class="cat-card fade-up" onclick="filterCatalog('conectores')">
+          <div class="cat-card fade-up" role="button" tabindex="0" aria-label="Ver conectores rápidos" onclick="filterCatalog('conectores')" onkeydown="handleCardKey(event, 'conectores')">
             <div class="cat-card-bg">
               <div class="cat-card-bg-inner">
                 <img src="https://sanflex.cl/456-large_default/conector-pasa-muro-recto-para-tubing-cpm.jpg"
-                  alt="Conector Pasa Muro" style="width: 100%; height: 100%; object-fit: contain;">
+                  alt="Conector rápido neumático para tubing PU" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: contain;">
               </div>
             </div>
             <div class="cat-card-overlay"></div>
@@ -459,12 +481,12 @@
             </div>
           </div>
 
-          <div class="cat-card fade-up" onclick="filterCatalog('tubing')">
+          <div class="cat-card fade-up" role="button" tabindex="0" aria-label="Ver tubing PU" onclick="filterCatalog('tubing')" onkeydown="handleCardKey(event, 'tubing')">
             <div class="cat-card-bg">
               <div class="cat-card-bg-inner">
                 <div class="cat-card-bg-inner">
             <img src="https://sanflex.cl/149-large_default/manguera-de-poliuretano-pu-12mm-transparente-tubing.jpg"
-                  alt="Conector Pasa Muro" style="width: 100%; height: 100%; object-fit: contain;">
+                  alt="Manguera de poliuretano PU para neumática" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: contain;">
                   </div>
               </div>
             </div>
@@ -491,11 +513,11 @@
             </div>
           </div>
 
-          <div class="cat-card fade-up" onclick="filterCatalog('valvulas')">
+          <div class="cat-card fade-up" role="button" tabindex="0" aria-label="Ver válvulas y acoples" onclick="filterCatalog('valvulas')" onkeydown="handleCardKey(event, 'valvulas')">
             <div class="cat-card-bg">
               <div class="cat-card-bg-inner">
             <img src="https://sanflex.cl/1020-large_default/acople-rápido-aire-he-14-bsp-tipo-alemán-dn72.jpg"
-                  alt="Conector Pasa Muro" style="width: 100%; height: 100%; object-fit: contain;">
+                  alt="Acople rápido neumático para aire comprimido" loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: contain;">
                   </div>
             </div>
             <div class="cat-card-overlay"></div>
@@ -520,7 +542,7 @@
             </div>
           </div>
 
-          <div class="cat-card fade-up" onclick="filterCatalog('racores')">
+          <div class="cat-card fade-up" role="button" tabindex="0" aria-label="Ver racores y fittings" onclick="filterCatalog('racores')" onkeydown="handleCardKey(event, 'racores')">
             <div class="cat-card-bg">
               <div class="cat-card-bg-inner">
                 <svg width="120" height="120" viewBox="0 0 120 120" fill="none" opacity="0.2">
@@ -607,9 +629,11 @@
             <div class="sidebar-title">Precio</div>
             <div class="price-range">
               <div class="price-inputs">
-                <input type="number" placeholder="Mín" id="price-min" onchange="applyFilters()" />
+                <label class="sr-only" for="price-min">Precio mínimo</label>
+                <input type="number" placeholder="Mín" id="price-min" onchange="applyFilters()" inputmode="numeric" />
                 <span>—</span>
-                <input type="number" placeholder="Máx" id="price-max" onchange="applyFilters()" />
+                <label class="sr-only" for="price-max">Precio máximo</label>
+                <input type="number" placeholder="Máx" id="price-max" onchange="applyFilters()" inputmode="numeric" />
               </div>
             </div>
           </div>
@@ -620,7 +644,8 @@
           <div class="catalog-toolbar">
             <div class="catalog-result-count" id="catalog-count">Mostrando todos los productos</div>
             <div class="catalog-sort">
-              <select onchange="sortCatalog(this.value)">
+              <label class="sr-only" for="catalog-sort">Ordenar catálogo</label>
+              <select id="catalog-sort" onchange="sortCatalog(this.value)">
                 <option value="default">Ordenar por: Relevancia</option>
                 <option value="price-asc">Precio: menor a mayor</option>
                 <option value="price-desc">Precio: mayor a menor</option>
@@ -663,9 +688,9 @@
           <!-- Qty -->
           <div class="option-label" style="margin-bottom:8px">Cantidad</div>
           <div class="qty-selector" style="margin-bottom:20px">
-            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <button class="qty-btn" onclick="changeQty(-1)" aria-label="Reducir cantidad">−</button>
             <div class="qty-value" id="qty-display">1</div>
-            <button class="qty-btn" onclick="changeQty(1)">+</button>
+            <button class="qty-btn" onclick="changeQty(1)" aria-label="Aumentar cantidad">+</button>
           </div>
 
           <div class="buy-actions">
@@ -733,6 +758,8 @@
   </div>
 
 
+  </main>
+
   <footer class="site-footer" id="footer">
     <div class="container">
       <div class="footer-top">
@@ -792,21 +819,21 @@
     </div>
   </footer>
 
-  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
-  <div class="cart-drawer" id="cart-drawer">
+  <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()" aria-hidden="true"></div>
+  <div class="cart-drawer" id="cart-drawer" role="dialog" aria-modal="true" aria-labelledby="cart-title">
     <div class="cart-head">
       <div>
-        <span class="cart-head-title">Mi Cotización</span>
+        <span class="cart-head-title" id="cart-title">Mi Cotización</span>
         <span class="cart-head-count" id="cart-head-count">0 productos</span>
       </div>
-      <button class="close-btn" onclick="toggleCart()">
+      <button class="close-btn" onclick="toggleCart()" aria-label="Cerrar cotización">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <line x1="18" y1="6" x2="6" y2="18" />
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
     </div>
-    <div class="cart-items" id="cart-items-list"></div>
+    <div class="cart-items" id="cart-items-list" aria-live="polite"></div>
     <div class="cart-footer" id="cart-footer" style="display:none">
       <div class="cart-iva">Los precios son referenciales · El equipo VAIR confirmará disponibilidad y precio final</div>
       <button class="btn btn-whatsapp" onclick="sendQuoteWhatsapp()">
@@ -821,7 +848,7 @@
   </div>
 
   <!-- Toast container -->
-  <div class="toast-container" id="toast-container"></div>
+  <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
 
   <!-- Breadcrumb estructurado estático para Googlebot -->
@@ -834,19 +861,19 @@
         "@type": "ListItem",
         "position": 1,
         "name": "Inicio",
-        "item": "https://www.vair.cl/"
+        "item": "https://vair.cl/"
       },
       {
         "@type": "ListItem",
         "position": 2,
         "name": "Catálogo de Productos Neumáticos",
-        "item": "https://www.vair.cl/#catalogo"
+        "item": "https://vair.cl/#catalogo"
       },
       {
         "@type": "ListItem",
         "position": 3,
         "name": "Solicitar Cotización",
-        "item": "https://www.vair.cl/#cotizacion"
+        "item": "https://vair.cl/#cotizacion"
       }
     ]
   }
@@ -857,3 +884,4 @@
 </body>
 
 </html>
+

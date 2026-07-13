@@ -3,7 +3,8 @@
   if (typeof module === "object" && module.exports) module.exports = api;
   root.VairCatalog = api;
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
-  const SITE_URL = "https://www.vair.cl";
+  // SEO: el CNAME publica el dominio raiz; usarlo como canonical evita duplicados entre www y non-www en Google Search Console.
+  const SITE_URL = "https://vair.cl";
   const PRODUCT_SOURCES = [
     { file: "sanflex.json", categoryId: "racores", categoryName: "Racores y conectores PU", shortName: "Racores" },
     { file: "manguera-pu.json", categoryId: "tubing", categoryName: "Mangueras de poliuretano PU", shortName: "Tubing PU" },
@@ -78,12 +79,14 @@
   }
 
   function metaDescription(product) {
-    const fallback = `${product.name} en ${product.categoryName}. Cotiza en VAIR Chile con despacho nacional y soporte tecnico especializado.`;
+    const cleanedName = cleanText(product.name).replace(/\s*\|\s*/g, " ");
+    const fallback = `${cleanedName} en ${product.categoryName}. Cotiza en VAIR Chile con stock permanente, despacho nacional y asesoría técnica especializada.`;
     return truncate(product.description || fallback, 155);
   }
 
   function metaTitle(product) {
-    return truncate(`${product.name} | VAIR Chile`, 60);
+    const cleanedName = cleanText(product.name).replace(/\s*\|\s*/g, " ");
+    return truncate(`${cleanedName} | VAIR Chile`, 60);
   }
 
   function keywords(product) {

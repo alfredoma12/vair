@@ -214,7 +214,13 @@ ul { list-style: none; }
   width: 100%;
   outline: none;
 }
-.search-bar input::placeholder { color: var(--c-text-subtle); }
+.search-bar input::placeholder {
+  color: var(--c-text-subtle);
+  opacity: 1;
+}
+.search-bar input:focus::placeholder {
+  opacity: 0;
+}
 .search-bar svg { color: var(--c-text-subtle); flex-shrink: 0; }
 
 .icon-btn {

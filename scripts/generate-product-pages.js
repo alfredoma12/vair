@@ -74,6 +74,7 @@ function breadcrumbItems(product) {
 }
 
 function productSchema(product) {
+  // SEO/Rich Results: no se agrega aggregateRating ni review porque no existen reseñas reales verificables para esta colección.
   const schema = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -82,6 +83,7 @@ function productSchema(product) {
     "description": metaDescription(product),
     "sku": product.sku,
     "url": product.absoluteUrl,
+    "mainEntityOfPage": `${product.absoluteUrl}#webpage`,
     "image": [absoluteAsset(product.image)],
     "brand": {
       "@type": "Brand",
@@ -97,20 +99,56 @@ function productSchema(product) {
       "itemCondition": "https://schema.org/NewCondition",
       "seller": {
         "@type": "Organization",
+        "@id": `${SITE_URL}/#organization`,
         "name": "VAIR Chile"
       }
     }
   };
 
-  if (product.ratingValue && product.reviewCount) {
-    schema.aggregateRating = {
-      "@type": "AggregateRating",
-      "ratingValue": product.ratingValue,
-      "reviewCount": product.reviewCount
-    };
-  }
-
   return schema;
+}
+
+function organizationSchema() {
+  // SEO local: una entidad estable de negocio ayuda a Google a relacionar marca, contacto, vendedor y paginas de producto.
+  return {
+    "@context": "https://schema.org",
+    "@type": ["Organization", "LocalBusiness"],
+    "@id": `${SITE_URL}/#organization`,
+    "name": "VAIR Chile",
+    "url": `${SITE_URL}/`,
+    "logo": `${SITE_URL}/vair.png`,
+    "image": `${SITE_URL}/vair.png`,
+    "telephone": "+56948543511",
+    "email": "ventas@vair.cl",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Santiago",
+      "addressRegion": "Región Metropolitana",
+      "addressCountry": "CL"
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "08:30",
+      "closes": "18:00"
+    },
+    "priceRange": "$$"
+  };
+}
+
+function productWebPageSchema(product) {
+  // SEO: WebPage enlaza la URL canonica con el producto principal y evita ambiguedad en datos estructurados.
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${product.absoluteUrl}#webpage`,
+    "url": product.absoluteUrl,
+    "name": metaTitle(product),
+    "description": metaDescription(product),
+    "inLanguage": "es-CL",
+    "publisher": { "@id": `${SITE_URL}/#organization` },
+    "mainEntity": { "@id": `${product.absoluteUrl}#product` }
+  };
 }
 
 function breadcrumbSchema(product) {
@@ -150,6 +188,8 @@ function renderProductPage(product, allProducts) {
   <meta name="description" content="${escapeHtml(description)}" />
   <meta name="keywords" content="${escapeHtml(keywords(product))}" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+  <meta name="theme-color" content="#ff7a00" />
+  <!-- SEO: el canonical de cada producto apunta a una URL estable y sin redirección para evitar conflictos en Search Console. -->
   <link rel="canonical" href="${escapeHtml(product.absoluteUrl)}" />
   <meta property="og:type" content="product" />
   <meta property="og:site_name" content="VAIR Chile" />
@@ -157,6 +197,7 @@ function renderProductPage(product, allProducts) {
   <meta property="og:description" content="${escapeHtml(description)}" />
   <meta property="og:url" content="${escapeHtml(product.absoluteUrl)}" />
   <meta property="og:image" content="${escapeHtml(image)}" />
+  <meta property="og:image:alt" content="${escapeHtml(product.name)}" />
   <meta property="product:price:amount" content="${escapeHtml(product.price)}" />
   <meta property="product:price:currency" content="CLP" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -166,6 +207,13 @@ function renderProductPage(product, allProducts) {
   <link rel="preload" href="/styles.css" as="style" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="icon" href="/vair.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/vair.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <!-- SEO: hreflang self-referential para es-CL; no se declaran idiomas que el sitio no ofrece. -->
+  <link rel="alternate" hreflang="es-cl" href="${escapeHtml(product.absoluteUrl)}" />
+  <link rel="alternate" hreflang="x-default" href="${escapeHtml(product.absoluteUrl)}" />
+  <script type="application/ld+json">${jsonLd(organizationSchema())}</script>
+  <script type="application/ld+json">${jsonLd(productWebPageSchema(product))}</script>
   <script type="application/ld+json">${jsonLd(productSchema(product))}</script>
   <script type="application/ld+json">${jsonLd(breadcrumbSchema(product))}</script>
 </head>
@@ -173,7 +221,7 @@ function renderProductPage(product, allProducts) {
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
-        <a href="/" class="logo logo-vair" aria-label="VAIR">
+        <a href="/" class="logo logo-vair" aria-label="Inicio VAIR Chile">
           <img src="/vair.png" alt="VAIR Chile" class="logo-img" width="120" height="40" />
         </a>
         <nav class="site-nav" aria-label="Principal">
@@ -189,7 +237,7 @@ function renderProductPage(product, allProducts) {
 
   <main class="product-static">
     <div class="container">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
+      <nav class="breadcrumb" aria-label="Migas de pan">
         ${crumbs.map((item, index) => index === crumbs.length - 1
           ? `<span class="current">${escapeHtml(item.name)}</span>`
           : `<a href="${escapeHtml(item.url.replace(SITE_URL, ""))}">${escapeHtml(item.name)}</a><span>›</span>`
@@ -197,7 +245,7 @@ function renderProductPage(product, allProducts) {
       </nav>
 
       <article class="product-layout product-page">
-        <section class="product-gallery" aria-label="Imagen del producto">
+        <section class="product-gallery" aria-label="Imagen principal del producto">
           <div class="gallery-main">
             <img class="detail-photo" src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" width="700" height="700" loading="eager" decoding="async" />
           </div>
@@ -220,7 +268,7 @@ function renderProductPage(product, allProducts) {
           <div class="product-meta">
             <div class="meta-row"><span>Despacho: <strong>1-3 días hábiles</strong></span></div>
             <div class="meta-row"><span>Producto <strong>certificado y garantizado</strong></span></div>
-            <div class="meta-row"><span>Soporte técnico: <strong>+56 9 4954 3511</strong></span></div>
+            <div class="meta-row"><span>Soporte técnico: <strong>+56 9 4854 3511</strong></span></div>
           </div>
         </section>
       </article>
@@ -266,7 +314,7 @@ function renderProductPage(product, allProducts) {
         </div>
         <div>
           <div class="footer-col-title">Contacto</div>
-          <div class="footer-contact-item"><div><strong>+56 9 4954 3511</strong><span>Lunes a viernes 8:30-18:00</span></div></div>
+          <div class="footer-contact-item"><div><strong>+56 9 4854 3511</strong><span>Lunes a viernes 8:30-18:00</span></div></div>
           <div class="footer-contact-item"><div><strong>ventas@vair.cl</strong><span>Respondemos en menos de 2h</span></div></div>
         </div>
       </div>
