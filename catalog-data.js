@@ -16,7 +16,7 @@
   }
 
   function repairMojibake(value) {
-    if (!/[ÃÂâ]/.test(value)) return value;
+    if (!/[]/.test(value)) return value;
 
     try {
       const bytes = new Uint8Array([...value].map((char) => char.charCodeAt(0) & 255));
@@ -32,7 +32,7 @@
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toLowerCase()
-      .replace(/["'’´`]/g, "")
+      .replace(/["'`]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/-{2,}/g, "-")
       .replace(/^-+|-+$/g, "");
@@ -80,7 +80,7 @@
 
   function metaDescription(product) {
     const cleanedName = cleanText(product.name).replace(/\s*\|\s*/g, " ");
-    const fallback = `${cleanedName} en ${product.categoryName}. Cotiza en VAIR Chile con stock permanente, despacho nacional y asesoría técnica especializada.`;
+    const fallback = `${cleanedName} en ${product.categoryName}. Cotiza en VAIR Chile con stock permanente, despacho nacional y asesora tcnica especializada.`;
     return truncate(product.description || fallback, 155);
   }
 
