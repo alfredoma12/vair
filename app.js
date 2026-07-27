@@ -1,4 +1,4 @@
-const {
+﻿const {
   PRODUCT_SOURCES,
   normalizeProduct
 } = window.VairCatalog;

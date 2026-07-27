@@ -8,11 +8,36 @@
   const PRODUCT_SOURCES = [
     { file: "sanflex.json", categoryId: "racores", categoryName: "Racores y conectores PU", shortName: "Racores" },
     { file: "manguera-pu.json", categoryId: "tubing", categoryName: "Mangueras de poliuretano PU", shortName: "Tubing PU" },
-    { file: "acoples -rapidos.json", categoryId: "acoples", categoryName: "Acoples rapidos", shortName: "Acoples" }
+    { file: "acoples -rapidos.json", categoryId: "acoples", categoryName: "Acoples rápidos", shortName: "Acoples" }
   ];
 
+  function normalizeCommonTextIssues(value) {
+    return value
+      .replace(/rpido/gi, "rápido")
+      .replace(/rpida/gi, "rápida")
+      .replace(/Caractersticas/gi, "Características")
+      .replace(/Medidal/gi, "Medida")
+      .replace(/Conexin/gi, "Conexión")
+      .replace(/Conexión\s+rápida/gi, "Conexión rápida")
+      .replace(/Plstico/gi, "Plástico")
+      .replace(/presin/gi, "presión")
+      .replace(/I\s+ndustriales/gi, "Industriales")
+      .replace(/automatizacin/gi, "automatización")
+      .replace(/instalacin/gi, "instalación")
+      .replace(/diseo/gi, "diseño")
+      .replace(/ptimo/gi, "óptimo")
+      .replace(/fcil/gi, "fácil")
+      .replace(/Unin/gi, "Unión")
+      .replace(/divisin/gi, "división")
+      .replace(/reducin/gi, "reducción")
+      .replace(/\s+/g, " ")
+      .replace(/\s+([,.;:!?])/g, "$1")
+      .trim();
+  }
+
   function cleanText(value) {
-    return repairMojibake(String(value ?? "")).replace(/\s+/g, " ").trim();
+    const repaired = repairMojibake(String(value ?? ""));
+    return normalizeCommonTextIssues(repaired).normalize("NFC");
   }
 
   function repairMojibake(value) {

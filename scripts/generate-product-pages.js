@@ -266,7 +266,7 @@ function renderProductPage(product, allProducts) {
             <a class="btn btn-outline" href="/#catalogo">Volver al catálogo</a>
           </div>
           <div class="product-meta">
-            <div class="meta-row"><span>Despacho: <strong>1-3 días hábiles</strong></span></div>
+            <div class="meta-row"><span>Despacho: <strong>5 horas hábiles</strong></span></div>
             <div class="meta-row"><span>Producto <strong>certificado y garantizado</strong></span></div>
             <div class="meta-row"><span>Soporte técnico: <strong>+56 9 4854 3511</strong></span></div>
           </div>
