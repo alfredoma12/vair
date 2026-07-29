@@ -241,6 +241,173 @@
     }
     .qty-btn-sm:hover { background: var(--c-bg, #f8fafc); }
     .cart-iva { font-size: 12px; color: var(--c-text-muted, #64748b); text-align: center; margin-bottom: 10px; }
+
+    /* === POP-UP PROMO STYLES === */
+    .promo-modal-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(15, 23, 42, 0.55);
+      z-index: 1200;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .promo-modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .promo-modal {
+      width: min(520px, 100%);
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.16);
+      padding: 26px 24px;
+      position: relative;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #0f172a;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .promo-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+    .promo-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.98rem;
+      letter-spacing: 0.01em;
+      color: #0f172a;
+    }
+    .promo-logo img {
+      width: 34px;
+      height: auto;
+      display: block;
+    }
+    .promo-logo-text {
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+    .promo-close-btn {
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 1.45rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 999px;
+      transition: color 0.15s ease, background-color 0.15s ease;
+    }
+    .promo-close-btn:hover {
+      background: rgba(15, 23, 42, 0.05);
+      color: #111827;
+    }
+    .promo-title {
+      font-size: 1.55rem;
+      line-height: 1.15;
+      margin: 0 0 10px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .promo-subtitle {
+      margin: 0 0 16px;
+      font-size: 1.05rem;
+      line-height: 1.4;
+      font-weight: 600;
+      color: #0f172a;
+    }
+    .promo-copy {
+      margin: 0 0 24px;
+      font-size: 0.98rem;
+      line-height: 1.8;
+      color: #475569;
+    }
+    .promo-button {
+      display: inline-flex;
+      width: 100%;
+      padding: 16px 20px;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border-radius: 999px;
+      background: #ff8c00;
+      color: #ffffff;
+      border: none;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    }
+    .promo-button:hover,
+    .promo-button:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 30px rgba(255, 140, 0, 0.18);
+      background: #ff7a00;
+      outline: none;
+    }
+    .promo-footer {
+      margin-top: 18px;
+      text-align: center;
+    }
+    .promo-link {
+      color: #0f172a;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: underline;
+      font-size: 0.98rem;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+    .promo-link:hover,
+    .promo-link:focus-visible {
+      color: #0c1225;
+      outline: none;
+    }
+
+    @media (min-width: 640px) {
+      .promo-modal {
+        padding: 32px;
+      }
+      .promo-title {
+        font-size: 1.8rem;
+      }
+      .promo-subtitle {
+        font-size: 1.1rem;
+      }
+      .promo-copy {
+        font-size: 1rem;
+      }
+      .promo-button {
+        font-size: 1rem;
+        padding: 18px 22px;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .promo-modal {
+        width: 520px;
+      }
+      .promo-title {
+        font-size: 2rem;
+      }
+      .promo-subtitle {
+        font-size: 1.12rem;
+      }
+    }
   </style>
 
   <script>
@@ -345,6 +512,15 @@
 
   <!-- Mobile Nav -->
   <nav class="mobile-nav" id="mobile-nav" aria-label="Navegación móvil">
+    <div class="mobile-search-block">
+      <div class="search-bar">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input type="search" id="search-input-mobile" oninput="handleSearch(this.value)" autocomplete="off" aria-label="Buscar productos" placeholder="Buscar productos" />
+      </div>
+    </div>
     <a href="/" onclick="showPage('home'); toggleMobileNav(); return false;">🏠 Inicio</a>
     <a href="/#catalogo" onclick="showPage('catalog'); toggleMobileNav(); return false;">📦 Productos</a>
     <a href="#" onclick="scrollToSection('categorias'); toggleMobileNav(); return false;">🗂️ Categorías</a>
@@ -602,6 +778,30 @@
 
 
           <div class="sidebar-block">
+            <div class="sidebar-title">Filtrar por producto</div>
+            <div class="sidebar-filter-control">
+              <label class="sr-only" for="product-filter-select">Seleccionar tipo de producto</label>
+              <select id="product-filter-select" class="sidebar-select" onchange="applyProductPresetFilter(this.value)">
+                <option value="">Todos los productos</option>
+                <option value="conector recto macho">Conector recto macho</option>
+                <option value="conector recto hembra">Conector recto hembra</option>
+                <option value="conector codo">Conector codo</option>
+                <option value="acople rapido">Acople rápido</option>
+                <option value="tubing">Tubing PU</option>
+                <option value="conector tee">Conector TEE</option>
+                <option value="unión pasamuros">Unión pasamuros</option>
+                <option value="reduccion neumática recta">Reducción neumática recta</option>
+                <option value="unión tubo a tubo">Unión tubo a tubo</option>
+                <option value="conexion neumática tipo y">Conexión neumática tipo Y</option>
+                <option value="conexion neumática minifold">Conexión neumática minifold</option>
+                <option value="regulador de flujo neumático">Regulador de flujo neumático</option>
+                <option value="conector neumático tipo cruz">Conector neumático tipo cruz</option>
+                <option value="mini válvula neumática">Mini válvula neumática</option>
+                <option value="conector fujometro neumatico L">Conector fujometro neumatico L</option>
+              </select>
+            </div>
+          </div>
+          <div class="sidebar-block">
             <div class="sidebar-title">Precio</div>
             <div class="price-range">
               <div class="price-inputs">
@@ -826,6 +1026,24 @@
   <!-- Toast container -->
   <div class="toast-container" id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
+  <div class="promo-modal-overlay" id="promo-modal-overlay" aria-hidden="true">
+    <div class="promo-modal" role="dialog" aria-modal="true" aria-labelledby="promo-title" aria-describedby="promo-copy">
+      <div class="promo-modal-header">
+        <div class="promo-logo">
+          <img src="vair.png" alt="Vair.cl" aria-hidden="true" />
+          <span class="promo-logo-text">Vair.cl</span>
+        </div>
+        <button class="promo-close-btn" id="promo-close-btn" aria-label="Cerrar ventana">×</button>
+      </div>
+      <h2 class="promo-title" id="promo-title">¡Buenas noticias para ti! 🏙️</h2>
+      <h3 class="promo-subtitle">Ahora el envío a la Región Metropolitana corre por nuestra cuenta.</h3>
+      <p class="promo-copy" id="promo-copy">En Vair.cl queremos que tu experiencia sea perfecta. Por eso, hemos eliminado el costo de despacho para todos nuestros productos si tu dirección de entrega está dentro de la RM.</p>
+      <button type="button" class="promo-button" id="promo-action-btn">[ Quiero mi envío gratis ]</button>
+      <div class="promo-footer">
+        <button type="button" class="promo-link" id="promo-continue-link">Seguir navegando</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Breadcrumb estructurado estático para Googlebot -->
   <script type="application/ld+json">
@@ -857,6 +1075,64 @@
 
   <script src="catalog-data.js"></script>
   <script src="app.js"></script>
+  <script>
+    (function () {
+      var modalOverlay = document.getElementById('promo-modal-overlay');
+      var closeBtn = document.getElementById('promo-close-btn');
+      var actionBtn = document.getElementById('promo-action-btn');
+      var continueLink = document.getElementById('promo-continue-link');
+
+      var PROMO_MODAL_CLOSED_KEY = 'vairPromoModalClosed';
+
+      function openPromoModal() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.add('active');
+        modalOverlay.setAttribute('aria-hidden', 'false');
+      }
+
+      function closePromoModal() {
+        if (!modalOverlay) return;
+        modalOverlay.classList.remove('active');
+        modalOverlay.setAttribute('aria-hidden', 'true');
+        try {
+          window.localStorage.setItem(PROMO_MODAL_CLOSED_KEY, 'true');
+        } catch (e) {
+          // Silently fall back si localStorage no está disponible.
+        }
+      }
+
+      function shouldShowPromoModal() {
+        try {
+          return window.localStorage.getItem(PROMO_MODAL_CLOSED_KEY) !== 'true';
+        } catch (e) {
+          return true;
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        if (modalOverlay && shouldShowPromoModal()) {
+          setTimeout(openPromoModal, 5000);
+          modalOverlay.addEventListener('click', function (event) {
+            if (event.target === modalOverlay) {
+              closePromoModal();
+            }
+          });
+        }
+        if (closeBtn) {
+          closeBtn.addEventListener('click', closePromoModal);
+        }
+        if (actionBtn) {
+          actionBtn.addEventListener('click', closePromoModal);
+        }
+        if (continueLink) {
+          continueLink.addEventListener('click', function (event) {
+            event.preventDefault();
+            closePromoModal();
+          });
+        }
+      });
+    })();
+  </script>
 </body>
 
 </html>

@@ -123,11 +123,32 @@ function getCategories() {
   })).filter((category) => category.count > 0);
 }
 
+function normalizeSearchText(value) {
+  if (!value) return "";
+  const accentsMap = new Map([
+    [/[áàâäã]/g, "a"],
+    [/[éèêë]/g, "e"],
+    [/[íìîï]/g, "i"],
+    [/[óòôöõ]/g, "o"],
+    [/[úùûü]/g, "u"],
+    [/[ç]/g, "c"],
+    [/[ñ]/g, "n"]
+  ]);
+  let text = value.toLowerCase();
+  accentsMap.forEach((replacement, pattern) => {
+    text = text.replace(pattern, replacement);
+  });
+  text = text.replace(/[^a-z0-9\s]/g, " ");
+  text = text.replace(/\b(\d+(?:\/\d+)?|mm|cm|g|kg|bar|psi)\b/g, " ");
+  text = text.replace(/\s+/g, " ").trim();
+  return text;
+}
+
 function applyFilters() {
   const min = Number(document.getElementById("price-min")?.value || 0);
   const max = Number(document.getElementById("price-max")?.value || 0);
   const selectedBrands = [...document.querySelectorAll("[data-brand]:checked")].map((input) => input.dataset.brand);
-  const query = state.search.toLowerCase();
+  const query = normalizeSearchText(state.search);
 
   state.filtered = state.products.filter((product) => {
     const matchesCategory =
@@ -135,8 +156,9 @@ function applyFilters() {
       product.categoryId === state.category;
     const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
     const matchesPrice = (!min || product.price >= min) && (!max || product.price <= max);
-    const text = `${product.name} ${product.description} ${product.brand} ${product.categoryName} ${product.material}`.toLowerCase();
-    const matchesSearch = !query || text.includes(query);
+    const text = normalizeSearchText(`${product.name} ${product.description} ${product.brand} ${product.categoryName} ${product.material}`);
+    const queryTerms = query.split(" ").filter(Boolean);
+    const matchesSearch = !queryTerms.length || queryTerms.every((term) => text.includes(term));
     return matchesCategory && matchesBrand && matchesPrice && matchesSearch;
   });
 
@@ -378,6 +400,30 @@ function handleSearch(value) {
   showPage("catalog");
   updateActiveCategory();
   applyFilters();
+
+  var desktopInput = document.getElementById("search-input");
+  var mobileInput = document.getElementById("search-input-mobile");
+  var presetSelect = document.getElementById("product-filter-select");
+  if (desktopInput) desktopInput.value = value;
+  if (mobileInput) mobileInput.value = value;
+  if (presetSelect) {
+    var matchingOption = Array.from(presetSelect.options).find((option) => option.value.toLowerCase() === value.toLowerCase());
+    presetSelect.value = matchingOption ? matchingOption.value : "";
+  }
+}
+
+function applyProductPresetFilter(value) {
+  var query = value || "";
+  state.search = query;
+  state.category = "all";
+  showPage("catalog");
+  updateActiveCategory();
+  applyFilters();
+
+  var desktopInput = document.getElementById("search-input");
+  var mobileInput = document.getElementById("search-input-mobile");
+  if (desktopInput) desktopInput.value = query;
+  if (mobileInput) mobileInput.value = query;
 }
 
 function toggleMobileNav() {

@@ -288,6 +288,14 @@ ul { list-style: none; }
   gap: 8px;
 }
 .mobile-nav.open { display: flex; }
+.mobile-nav .search-bar {
+  display: flex;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.mobile-nav .search-bar input {
+  width: 100%;
+}
 .mobile-nav a {
   font-size: 18px;
   font-weight: 600;
@@ -297,21 +305,57 @@ ul { list-style: none; }
   transition: background var(--transition);
 }
 .mobile-nav a:hover { background: var(--c-bg); }
-
-/* =========================================
-   ANNOUNCE BAR
-   ========================================= */
-.announce-bar {
-  background: var(--c-slate);
-  color: white;
-  font-size: 13px;
-  font-weight: 500;
-  text-align: center;
-  padding: 9px 20px;
-  letter-spacing: 0.02em;
+.sidebar-filters {
+  display: grid;
+  gap: 10px;
 }
-.announce-bar span { color: var(--c-orange); }
-
+.sidebar-select,
+.sidebar-filter-btn {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--c-border);
+  background: var(--c-white);
+  color: var(--c-text);
+  font-size: 14px;
+  font-weight: 600;
+  transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+.sidebar-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23364750' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+}
+.sidebar-select:focus {
+  outline: none;
+  border-color: var(--c-blue);
+}
+.sidebar-select option {
+  color: var(--c-text);
+}
+.sidebar-filter-btn {
+  text-align: left;
+  cursor: pointer;
+}
+.sidebar-filter-btn:hover,
+.sidebar-filter-btn:focus-visible,
+.sidebar-select:hover,
+.sidebar-select:focus-visible {
+  background: var(--c-blue-light);
+  border-color: var(--c-blue);
+  color: var(--c-blue);
+  outline: none;
+}
+.mobile-nav .search-bar {
+  display: flex;
+  width: 100%;
+  margin-bottom: 12px;
+}
+.mobile-nav .search-bar input {
+  width: 100%;
+}
 /* =========================================
    HERO
    ========================================= */
