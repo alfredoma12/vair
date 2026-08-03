@@ -178,6 +178,9 @@ function renderProductPage(product, allProducts) {
   const crumbs = breadcrumbItems(product);
   const whatsappMessage = `Hola VAIR, me gustaría cotizar ${product.name}. SKU: ${product.sku}. URL: ${product.absoluteUrl}`;
   const whatsappUrl = `https://wa.me/56948543511?text=${encodeURIComponent(whatsappMessage)}`;
+  const externalLink = product.productUrl && product.productUrl !== "#"
+    ? `<a class="btn btn-outline" href="${escapeHtml(product.productUrl)}" target="_blank" rel="noopener">Ver en la web del producto</a>`
+    : "";
 
   return `<!DOCTYPE html>
 <html lang="es-CL">
@@ -263,6 +266,7 @@ function renderProductPage(product, allProducts) {
           <p class="product-detail-desc">${escapeHtml(product.description || description)}</p>
           <div class="buy-actions">
             <a class="btn btn-orange btn-lg" href="${escapeHtml(whatsappUrl)}" target="_blank" rel="noopener">Solicitar cotización</a>
+            ${externalLink}
             <a class="btn btn-outline" href="/#catalogo">Volver al catálogo</a>
           </div>
           <div class="product-meta">

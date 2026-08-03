@@ -116,11 +116,30 @@ function renderBrandFilters() {
 }
 
 function getCategories() {
-  return PRODUCT_SOURCES.map((source) => ({
-    id: source.categoryId,
-    name: source.categoryName,
-    count: state.products.filter((product) => product.categoryId === source.categoryId).length
-  })).filter((category) => category.count > 0);
+  const order = new Map([
+    ["racores", 0],
+    ["mangueras", 1],
+    ["acoples", 2]
+  ]);
+
+  const categories = state.products.reduce((acc, product) => {
+    const existing = acc.get(product.categoryId);
+    if (existing) {
+      existing.count += 1;
+      return acc;
+    }
+
+    acc.set(product.categoryId, {
+      id: product.categoryId,
+      name: product.categoryName || "Productos",
+      count: 1
+    });
+    return acc;
+  }, new Map());
+
+  return [...categories.values()]
+    .filter((category) => category.count > 0)
+    .sort((a, b) => (order.get(a.id) ?? 99) - (order.get(b.id) ?? 99));
 }
 
 function normalizeSearchText(value) {
@@ -226,6 +245,9 @@ function renderFeatured() {
 function renderProductCard(product) {
   const badge = `<span class="product-badge badge-new">${escapeHtml(product.categoryName.split(" ")[0])}</span>`;
   const inQuote = state.cart.some((item) => item.id === product.id);
+  const externalLink = product.productUrl && product.productUrl !== "#"
+    ? `<a class="btn btn-outline btn-sm" href="${escapeHtml(product.productUrl)}" target="_blank" rel="noopener">Ver en web</a>`
+    : "";
 
   return `
     <article class="product-card">
@@ -252,6 +274,7 @@ function renderProductCard(product) {
         <button class="btn btn-orange btn-sm ${inQuote ? "btn-in-quote" : ""}" onclick="addToQuote('${product.id}')">
           ${inQuote ? "En cotización" : "Agregar a cotización"}
         </button>
+        ${externalLink}
       </div>
     </article>
   `;
