@@ -245,9 +245,6 @@ function renderFeatured() {
 function renderProductCard(product) {
   const badge = `<span class="product-badge badge-new">${escapeHtml(product.categoryName.split(" ")[0])}</span>`;
   const inQuote = state.cart.some((item) => item.id === product.id);
-  const externalLink = product.productUrl && product.productUrl !== "#"
-    ? `<a class="btn btn-outline btn-sm" href="${escapeHtml(product.productUrl)}" target="_blank" rel="noopener">Ver en web</a>`
-    : "";
 
   return `
     <article class="product-card">
@@ -274,7 +271,6 @@ function renderProductCard(product) {
         <button class="btn btn-orange btn-sm ${inQuote ? "btn-in-quote" : ""}" onclick="addToQuote('${product.id}')">
           ${inQuote ? "En cotización" : "Agregar a cotización"}
         </button>
-        ${externalLink}
       </div>
     </article>
   `;
